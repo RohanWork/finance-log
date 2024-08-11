@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools">
+
+    <item android:title="@string/transaction_options">
+        <menu>
+            <item
+                    android:id="@+id/historyButton"
+                    android:icon="@drawable/ic_history"
+                    android:title="@string/transaction_log" />
+            <item
+                    android:id="@+id/viewTransactionButton"
+                    android:icon="@drawable/ic_trans"
+                    android:title="@string/transaction_history" />
+        </menu>
+    </item>
+
+    <item android:title="@string/communication">
+        <menu>
+            <item
+                    android:id="@+id/option_guide"
+                    android:icon="@drawable/guide"
+                    android:title="@string/app_guide"
+                    android:actionLayout="@layout/nav_menu_item"/>
+            <item
+                    android:id="@+id/option_contact"
+                    android:icon="@drawable/contact"
+                    android:title="@string/developer_contact"
+                    android:actionLayout="@layout/nav_menu_item"/>
+            <item
+                    android:id="@+id/option_rate"
+                    android:icon="@drawable/rate"
+                    android:title="@string/rate_us"
+                    android:actionLayout="@layout/nav_menu_item"/>
+            <item
+                    android:id="@+id/option_share"
+                    android:icon="@drawable/share"
+                    android:title="@string/share_via"
+                    android:actionLayout="@layout/nav_menu_item"/>
+            <item
+                    android:id="@+id/option_report"
+                    android:icon="@drawable/bug_report"
+                    android:title="@string/report_bug_error"
+                    android:actionLayout="@layout/nav_menu_item"/>
+            <item
+                    android:id="@+id/privacy_policy"
+                    android:title="@string/privacy_policy"
+                    android:icon="@drawable/policy"
+                    android:actionLayout="@layout/nav_menu_item"/>
+            <item
+                    android:id="@+id/appVersion"
+                    android:title="@string/app_version"
+                    android:actionLayout="@layout/nav_menu_item"/>
+        </menu>
+    </item>
+
+</menu>

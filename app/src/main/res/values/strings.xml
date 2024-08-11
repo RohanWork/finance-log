@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">Finance Log</string>
+    <string name="banks_logo">banks_logo</string>
+
+
+    <string name="welcome">Welcome</string>
+    <string name="login">Login</string>
+    <string name="please_verify_your_email">Please verify your email</string>
+    <string name="verify">Verify</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="flash_screen">FLASH SCREEN</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register_password">Register Password</string>
+    <string name="register_e_mail">Register E-Mail</string>
+    <string name="register_full_name">Register Full-name</string>
+    <string name="register">Register</string>
+    <string name="create_account">Create Account</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="the_otp_can_regenerate_after_60_seconds">The OTP can regenerate after 60 seconds.</string>
+    <string name="_91">+91</string>
+    <string name="enter_valid_number">Enter valid number</string>
+    <string name="_91_simple">91</string>
+    <string name="verify_your_phone_number">Verify your phone number</string>
+    <string name="verify_number">Verify number</string>
+    <string name="enter_login_password">Enter login password</string>
+    <string name="college_logo">College logo</string>
+    <string name="login_with_mobile">Login with mobile</string>
+    <string name="clear">Clear</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="main_note">Some other RIT module\'s for student\'s:</string>
+    <string name="main_note2">Please refer the AppGuide for more information</string>
+    <string name="college_name">Rajarambapu Institute of Technology</string>
+    <string name="communication">Communication</string>
+    <string name="share_via">Share Via</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="developer_contact">Developer Contact</string>
+    <string name="app_guide">App Guide</string>
+    <string name="report_bug_error">Report Bug/Error</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="app_version">Finance Log Android v2.4.5</string>
+    <string name="transaction_log">Transaction Log</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="transaction_options">Transaction Options</string>
 </resources>

@@ -1,0 +1,202 @@
+<!--<head>-->
+<!--    <link href="solve.css" rel="stylesheet" type="text/css">-->
+<!--    <title>Finance Developer Info</title>-->
+<!--</head>-->
+<!--<div class="about-section">-->
+<!--&lt;!&ndash;    <h2>Application Develop Under</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;    <p>&ndash;&gt;-->
+<!--    <h2>Finance Log</h2>-->
+<!--&lt;!&ndash;    <p>&ndash;&gt;-->
+<!--&lt;!&ndash;    <h2>Rajarambapu Institute of Technology</h2>&ndash;&gt;-->
+<!--</div>-->
+
+
+<!--<div class="column">-->
+<!--    <div class="card">-->
+<!--        <img src="member3.jpg" alt="Mr. Rohan Katare" style="width:100%">-->
+<!--        <div class="container">-->
+<!--            <h2> Mr. Rohan U. Katare </h2>-->
+<!--            <p class="title"> <font color="#FF0000"> Developer </font> </p>-->
+<!--            <p> rohan.katare.official@gmail.com </p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- -->
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="solve.css" rel="stylesheet" type="text/css">
+    <title>Finance Developer Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff; /* Black background */
+            color: #FFFFFF; /* White text */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            background-color: #FFC107; /* Yellow background */
+            color: black;
+            padding: 15px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .about-section {
+            padding: 20px;
+            text-align: center;
+            background-color: #FFFFFF; /* White background */
+            margin: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Fixed width for steady layout */
+            width: 100%;
+        }
+        .about-section h2 {
+            margin: 0;
+            color: #000000; /* Black text */
+        }
+        .column {
+            display: flex;
+            justify-content: center;
+            margin: 15px;
+            width: 100%;
+        }
+        .card {
+            background-color: #FFFFFF; /* White background */
+            border: 1px solid #fff; /* Black border */
+            border-radius: 12px; /* Slightly more rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Larger shadow for floating effect */
+            overflow: hidden;
+            width: 300px;
+            text-align: center;
+            margin: 0 auto; /* Centering the card */
+            padding: 15px;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease-in-out; /* Smooth shadow transition on hover */
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #000000; /* Black border below image */
+        }
+        .container {
+            padding: 15px;
+        }
+        .container h2 {
+            margin: 10px 0;
+            color: #000000; /* Black text */
+        }
+        .container p {
+            margin: 5px 0;
+            color: #000000; /* Black text */
+        }
+        .title {
+            color: #FFC107; /* Yellow text */
+            font-weight: bold;
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            z-index: 1000;
+            text-align: center;
+            color: #000000; /* Black text */
+        }
+        .popup img {
+            width: 40px;
+            height: 40px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .popup a {
+            text-decoration: none;
+        }
+        .overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Meet Developer</h1>
+</div>
+
+<div class="about-section">
+    <h2>About the Finance Log App</h2>
+    <p>Welcome to the Finance Log application. This app is designed to help you keep track of your financial transactions in a streamlined and organized manner. Developed with the aim of simplifying your financial management, it provides features to log and analyze your transactions efficiently.</p>
+</div>
+
+<div class="column">
+    <div class="card" onclick="showPopup()">
+        <img src="member3.jpg" alt="Mr. Rohan Katare">
+        <div class="container">
+            <h2>Mr. Rohan U. Katare</h2>
+            <p class="title">Developer</p>
+            <p>pubdata.ltd@gmail.com</p>
+        </div>
+    </div>
+</div>
+
+<!-- Popup and overlay -->
+<div id="overlay" class="overlay" onclick="hidePopup()"></div>
+<div id="popup" class="popup">
+    <h3>Connect with me</h3>
+    <a href="https://www.linkedin.com/in/rohan-k-30b3b0218/" target="_blank">
+        <img src="linkedin_img.png" alt="LinkedIn">
+    </a>
+    <a href="https://github.com/RohanWork" target="_blank">
+        <img src="github_img.png" alt="GitHub">
+    </a>
+    <a href="mailto:pubdata.ltd@gmail.com">
+        <img src="email_img.png" alt="Email">
+    </a>
+</div>
+
+<script>
+    function showPopup() {
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    function hidePopup() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('popup').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

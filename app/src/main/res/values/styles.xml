@@ -1,27 +1,153 @@
-<!-- styles.xml -->
 <resources>
 
-    <!-- Base application theme -->
-    <style name="Theme.Finance" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <!-- Base application light theme -->
+    <style name="Theme.Material3.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+<!--        <item name="colorPrimary">@color/yellow</item>-->
+<!--        <item name="colorPrimaryVariant">@color/blue_700</item>-->
+<!--        <item name="colorOnPrimary">@color/white</item>-->
+
+        <item name="colorPrimary">@color/yellow</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/black</item>
+
         <!-- Secondary brand color -->
-        <item name="colorSecondary">@color/teal_200</item>
+<!--        <item name="colorSecondary">@color/yellow</item>-->
+<!--        <item name="colorSecondaryVariant">@color/blue_700</item>-->
+<!--        <item name="colorOnSecondary">@color/white</item>-->
+
+        <item name="colorSecondary">@color/yellow</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
-<!--        <item name="colorOnSecondary">@color/splash_background</item>-->
-        <!-- Status bar color -->
-<!--        <item name="android:windowTranslucentStatus">true</item>-->
-<!--        <item name="android:windowLightStatusBar">true</item>-->
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+
         <!-- Customize your theme here -->
-        <item name="android:background">@color/white</item>
+        <item name="snackbarStyle"> @color/black </item>
+<!--        <item name="android:background">@color/black</item>-->
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@color/blue_500</item>
     </style>
 
     <!-- Splash screen theme -->
-    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:background">@color/yellow</item>
+    </style>
+
+    <style name="DatePickerButtonStyle1" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/black</item>
         <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="DatePickerDialogTheme1" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <!-- Background color -->
+        <item name="android:background">#000000</item> <!-- Black background -->
+        <!-- Text color -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Button styles -->
+        <item name="buttonStyle">@style/DatePickerButtonStyle</item>
+    </style>
+
+    <style name="DatePickerTheme1" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <!-- Header background color -->
+        <item name="colorPrimary">@color/yellow</item>
+        <!-- Header text color -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Selected day background color -->
+        <item name="colorAccent">@color/yellow</item>
+        <!-- Selected day text color -->
+        <item name="android:textColor">@color/black</item>
+        <!-- Year and month text color -->
+        <item name="android:textColorSecondary">@color/black</item>
+        <!-- Day of the week text color -->
+        <item name="android:textColorTertiary">@color/gray</item>
+        <!-- Apply DatePickerDialog theme -->
+        <item name="android:datePickerStyle">@style/DatePickerDialogTheme</item>
+        <!-- Button style -->
+<!--        <item name="buttonStyle">@style/DatePickerButtonStyle</item>-->
+    </style>
+
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="android:textColorAlertDialogListItem">@color/white</item>
+    </style>
+
+    <style name="CustomToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/yellow</item>
+        <item name="android:titleTextAppearance">@style/ToolbarTitleText</item>
+    </style>
+    <style name="ToolbarTitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <!-- DatePickerDialog theme -->
+    <style name="DatePickerDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <!-- Dialog background color -->
+        <item name="android:background">#000000</item> <!-- Black background -->
+        <!-- Text color -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <!-- Button styles -->
+        <item name="buttonStyle">@style/DatePickerButtonStyle</item>
+    </style>
+
+    <!-- DatePicker Button Style -->
+    <style name="DatePickerButtonStyle2" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/yellow</item>
+    </style>
+
+    <!-- DatePicker Theme -->
+    <style name="DatePickerTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <!-- Header background color -->
+        <item name="colorPrimary">@color/yellow</item>
+        <!-- Header text color -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Selected day background color -->
+        <item name="colorAccent">@color/yellow</item>
+        <!-- Selected day text color -->
+        <item name="android:textColor">@color/black</item>
+        <!-- Year and month text color -->
+        <item name="android:textColorSecondary">@color/black</item>
+        <!-- Day of the week text color -->
+        <item name="android:textColorTertiary">@color/gray</item>
+        <!-- Apply DatePickerDialog theme -->
+        <item name="android:datePickerStyle">@style/DatePickerDialogTheme</item>
+    </style>
+
+
+
+    <!-- Custom DatePicker Dialog Theme -->
+    <style name="DarkDatePickerDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <!-- Background color -->
+        <item name="android:background">#000000</item> <!-- Black background -->
+        <!-- Header color -->
+        <item name="colorPrimary">@color/yellow</item> <!-- Adjust if necessary -->
+        <!-- Header text color -->
+        <item name="android:textColorPrimary">@color/white</item> <!-- White text color -->
+        <!-- Date text color -->
+        <item name="android:textColor">@color/white</item> <!-- White text color for dates -->
+        <!-- Other text colors -->
+        <item name="android:textColorSecondary">@color/white</item> <!-- White text color for other text -->
+        <item name="android:textColorTertiary">@color/white</item> <!-- White text color for day of the week -->
+        <!-- Button style -->
+        <item name="buttonStyle">@style/DatePickerButtonStyle</item>
+    </style>
+
+    <!-- Custom Button Style for DatePicker -->
+    <style name="DatePickerButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">?attr/colorPrimary</item> <!-- Use primary color for background if needed -->
+    </style>
+
+    <style name="CustomMenuItemTextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item> <!-- Adjust size as needed -->
+    </style>
+
+    <style name="RoundedCornerDialog" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="android:windowBackground">@drawable/rounded_corner_dialog_background</item>
     </style>
 
 </resources>
