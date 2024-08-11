@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="16dp"
+              android:background="@android:color/white"> <!-- added white background -->
+
+    <EditText
+            android:id="@+id/et_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Amount"
+            android:inputType="numberDecimal"
+            android:padding="8dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:background="@drawable/edit_text_background" /> <!-- added custom background -->
+
+    <EditText
+            android:id="@+id/et_bank_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Bank Name"
+            android:padding="8dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:background="@drawable/edit_text_background" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
+
+        <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Date (yyyy-MM-dd)"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:background="@drawable/edit_text_background"
+                android:textColor="@android:color/black" />
+
+        <Button
+                android:id="@+id/btn_pick_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick Date"
+                android:padding="8dp"
+                android:background="@drawable/button_background" /> <!-- added custom button background -->
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
+
+        <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Time (HH:mm:ss)"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:background="@drawable/edit_text_background"
+                android:textColor="@android:color/black" />
+
+        <Button
+                android:id="@+id/btn_pick_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick Time"
+                android:padding="8dp"
+                android:background="@drawable/button_background" />
+
+    </LinearLayout>
+
+    <RadioGroup
+            android:id="@+id/radio_group_transaction_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:paddingTop="16dp">
+
+        <RadioButton
+                android:id="@+id/radio_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credit"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_marginEnd="8dp" />
+
+        <RadioButton
+                android:id="@+id/radio_debit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Debit"
+                android:textSize="18sp"
+                android:textColor="@android:color/black" />
+
+    </RadioGroup>
+
+</LinearLayout>

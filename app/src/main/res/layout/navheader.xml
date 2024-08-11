@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/yellow"
+        android:id="@+id/drawer">
+
+    <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"
+            android:background="@color/yellow"
+            android:layout_marginTop="12dp"
+            android:contentDescription="@string/college_logo" />
+<!--            android:onClick="ritindia" -->
+
+    <TextView
+            android:id="@+id/t1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:background="@color/yellow"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:layout_marginTop="6dp"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+<!--            android:onClick="ritindia" -->
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

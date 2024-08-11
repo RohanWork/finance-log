@@ -5,6 +5,8 @@
     <uses-feature android:name="android.hardware.telephony" android:required="false"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
             android:allowBackup="true"
@@ -15,10 +17,10 @@
             android:icon="@mipmap/finance_logo"
             android:roundIcon="@mipmap/finance_logo_round"
             android:supportsRtl="true"
-            android:theme="@style/Theme.Finance">
+            android:theme="@style/Theme.Material3.Light">
 
         <activity
-                android:name=".SplashActivity"
+                android:name=".splash.SplashActivity"
                 android:theme="@style/SplashTheme"
                 android:exported="true">
             <intent-filter>
@@ -30,14 +32,28 @@
         <activity
                 android:name=".MainActivity"
                 android:exported="true"/>
+        <activity android:name=".history.HistoryActivity" />
+        <activity android:name=".transaction.TransactionDetailActivity" />
+        <activity android:name=".auxilary.Policy" />
+        <activity android:name=".auxilary.DeveloperInfo" />
+
+        <service android:name=".smsfunctionality.SmsListenerService" />
 
         <receiver
-                android:name=".SmsReceiver"
-                android:exported="true"
-                android:permission="android.permission.BROADCAST_SMS">
+                android:name=".smsfunctionality.SmsReceiver"
+                android:permission="android.permission.BROADCAST_SMS"
+                android:exported="false">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
+
     </application>
+
+    <queries>
+        <package android:name="com.google.android.gm" /> <!-- Gmail package -->
+        <package android:name="com.microsoft.office.outlook" /> <!-- Outlook package -->
+        <package android:name="com.yahoo.mobile.client.android.mail" /> <!-- Yahoo Mail package -->
+    </queries>
+
 </manifest>
