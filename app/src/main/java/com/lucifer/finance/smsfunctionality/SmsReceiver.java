@@ -1119,8 +1119,27 @@ public class SmsReceiver extends BroadcastReceiver {
 
     private BigDecimal extractAmount(String msgBody, boolean[] isCreditDebit) {
         // Updated regex patterns to match credit and debit transaction patterns
-        Pattern creditPattern = Pattern.compile("(?i)\\b(credited|CR|deposit|received|added|inflow|funds added|credited to your account|amount credited|credited with|credit to)\\b.*?\\b(\\d{1,7}(?:,\\d{3})*(?:\\.\\d{2})?)\\b");
-        Pattern debitPattern = Pattern.compile("(?i)\\b(debited|debit|DR|withdrawal|spent|deducted|outflow|funds withdrawn|amount debited|debited from your account|deducted from|debit to)\\b.*?\\b(\\d{1,7}(?:,\\d{3})*(?:\\.\\d{2})?)\\b");
+//        Pattern creditPattern = Pattern.compile("(?i)\\b(credited|CR|deposit|received|added|inflow|funds added|credited to your account|amount credited|credited with|credit to)\\b.*?\\b(\\d{1,7}(?:,\\d{3})*(?:\\.\\d{2})?)\\b");
+//        Pattern debitPattern = Pattern.compile("(?i)\\b(debited|debit|DR|withdrawal|spent|deducted|outflow|funds withdrawn|amount debited|debited from your account|deducted from|debit to)\\b.*?\\b(\\d{1,7}(?:,\\d{3})*(?:\\.\\d{2})?)\\b");
+
+//        Pattern creditPattern = Pattern.compile(
+//                "(?:credited|deposit|added|received|credited\\s*to|credited\\s*for|credited\\s*by)" +
+//                        "\\s*(?:INR|Rs\\.?|Rs\\.|inr|rs\\.?|rs\\.|\\$|USD|usd)?" +
+//                        "\\s*([\\d,\\.]+)",
+//                Pattern.CASE_INSENSITIVE
+//        );
+//        Pattern debitPattern = Pattern.compile(
+//                "(?:Dear Customer,|debited|withdrawn|deducted|paid|debit\\s*from|debited\\s*for|debited\\s*by|debit by\\s*of Rs)" +
+//                        "\\s*(?:INR|Rs\\.?|Rs\\.|inr|rs\\.?|rs\\.|\\$|USD|usd)?" +
+//                        "\\s*([\\d,\\.]+)",
+//                Pattern.CASE_INSENSITIVE
+//        );
+
+//        Pattern creditPattern = Pattern.compile("(?i)\\b(credited|CR|deposit|received|added|inflow|funds added|credited to your account|amount credited|credited with|credit to)\\b.?\\b(\\d{1,7}(?:,\\d{3})(?:\\.\\d{2})?)\\b");
+//        Pattern debitPattern = Pattern.compile("(?i)\\b(debited|debit|DR|withdrawal|spent|deducted|outflow|funds withdrawn|amount debited|debited from your account|deducted from|debit to)\\b.?\\b(\\d{1,7}(?:,\\d{3})(?:\\.\\d{2})?)\\b");
+
+        Pattern creditPattern = Pattern.compile("(?:credited(?:\\s*for)?\\s*INR|credited\\s*Rs\\.?)\\s*(\\d{1,7}(?:,\\d{3})*(?:\\.\\d{1,2})?)");
+        Pattern debitPattern =  Pattern.compile("(?:debited(?:\\s*for)?\\s*INR|debited\\s*by\\s*Rs\\.?|debited\\s*by)\\s*(\\d{1,7}(?:,\\d{3})*(?:\\.\\d{1,2})?)");
 
         Matcher creditMatcher = creditPattern.matcher(msgBody);
         Matcher debitMatcher = debitPattern.matcher(msgBody);
@@ -1133,10 +1152,16 @@ public class SmsReceiver extends BroadcastReceiver {
         isCreditDebit[1] = isDebit;
 
         String amountStr = null;
+//        if (isCredit) {
+//            amountStr = creditMatcher.group(2).replace(",", "");
+//        } else if (isDebit) {
+//            amountStr = debitMatcher.group(2).replace(",", "");
+//        }
+
         if (isCredit) {
-            amountStr = creditMatcher.group(2).replace(",", "");
+            amountStr = creditMatcher.group(1).replace(",", "");
         } else if (isDebit) {
-            amountStr = debitMatcher.group(2).replace(",", "");
+            amountStr = debitMatcher.group(1).replace(",", "");
         }
 
         if (amountStr != null) {

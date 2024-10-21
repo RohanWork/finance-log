@@ -10,6 +10,7 @@ public class Transaction implements Serializable {
     private String bankName;
     private int bankLogo;
     private boolean isCredit;
+    private double amt;
 
     public Transaction(String date, String time, BigDecimal amount, String bankName, int bankLogo, boolean isCredit) {
         this.date = date;
@@ -24,6 +25,18 @@ public class Transaction implements Serializable {
         this.date = date;
         this.time = time;
         this.amount = amount;
+        this.bankName = bankName;
+        this.bankLogo = bankLogo;
+        this.isCredit = isCredit;
+    }
+
+    public Transaction() {
+    }
+
+    public Transaction(String date, String time, double amount, String bankName, int bankLogo, boolean credit) {
+        this.date = date;
+        this.time = time;
+        this.amt = amount;
         this.bankName = bankName;
         this.bankLogo = bankLogo;
         this.isCredit = isCredit;
@@ -54,5 +67,16 @@ public class Transaction implements Serializable {
 
     public int getBankLogo() {
         return bankLogo;
+    }
+
+    public double getAmt(BigDecimal amount) {
+        amt = Double.parseDouble(amount.toString());
+        this.amt = amt;
+        return amt;
+    }
+
+    public void setAmt(BigDecimal amount) {
+        amt = Double.parseDouble(amount.toString());
+        this.amt = amt;
     }
 }

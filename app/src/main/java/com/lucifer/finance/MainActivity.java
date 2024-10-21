@@ -4,10 +4,12 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +29,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.karumi.dexter.Dexter;
@@ -34,6 +41,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.lucifer.finance.auth.LoginActivity;
 import com.lucifer.finance.auxilary.DeveloperInfo;
 import com.lucifer.finance.auxilary.Policy;
 import com.lucifer.finance.build.LoadBuildConfig;
@@ -42,6 +50,7 @@ import com.lucifer.finance.smsfunctionality.SmsListenerService;
 import com.lucifer.finance.smsfunctionality.SmsReceiver;
 import com.lucifer.finance.transaction.Transaction;
 import com.lucifer.finance.transaction.TransactionDetailActivity;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -67,12 +76,20 @@ public class MainActivity extends AppCompatActivity {
     private Runnable runnable;
     private FloatingActionButton addTransactionButton;
     private boolean doubleBackToExitPressedOnce = false;
+    private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
+    String userId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        FirebaseApp.initializeApp(this);
+
+        mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getProviderId();
 
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.yellow));
         initializeUI();
@@ -218,20 +235,52 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.historyButton) {
                     startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                     return true;
-                } if (item.getItemId() == R.id.viewTransactionButton) {
+                }
+                if (item.getItemId() == R.id.viewTransactionButton) {
                     startActivity(new Intent(MainActivity.this, TransactionDetailActivity.class));
                     return true;
-                } if (item.getItemId() == R.id.option_contact) {
+                }
+                if (item.getItemId() == R.id.logout) {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Logout")
+                            .setMessage("Do you want to logout from your account?")
+                            .setIcon(R.drawable.signout)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mAuth.signOut();
+                                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(login);
+                                    finish();
+//                                    Snackbar snackbar = Snackbar.make(mainView, "Thank you for using our services", Snackbar.LENGTH_SHORT);
+//                                    customizeSnackbar(snackbar);
+//                                    snackbar.show();
+                                    Toast.makeText(MainActivity.this, "Thank you for using our services", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+                if (item.getItemId() == R.id.option_contact) {
                     Intent devContact = new Intent(MainActivity.this, DeveloperInfo.class);
                     startActivity(devContact);
                     return true;
-                } if (item.getItemId() == R.id.appVersion) {
+                }
+                if (item.getItemId() == R.id.appVersion) {
                     String verName = LoadBuildConfig.VERSION_NAME;
                     Snackbar snackbar = Snackbar.make(mainView, "Finance Log for Android v" + verName + " [Pilot Build]", Snackbar.LENGTH_SHORT);
                     customizeSnackbar(snackbar);
                     snackbar.show();
                     return true;
-                } if (item.getItemId() == R.id.option_report) {
+                }
+                if (item.getItemId() == R.id.option_report) {
                     String versionName = LoadBuildConfig.VERSION_NAME;
 
                     // Generate a unique report ID
@@ -240,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
                     // Create the email intent
                     Intent email = new Intent(Intent.ACTION_SENDTO);
                     email.setData(Uri.parse("mailto:")); // Only email apps should handle this
-                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{"pubdata.ltd@gmail.com"});
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{"kanjarkarprathmesh@gmail.com"});
                     email.putExtra(Intent.EXTRA_SUBJECT, "Reporting bug/error of finance-log v" + versionName);
                     email.putExtra(Intent.EXTRA_TEXT, "Report ID: \n" + reportId + "\n\nNOTE: \nPlease attach the screenshot or any valid image of design/component bug.\n\n ");
 
@@ -260,26 +309,29 @@ public class MainActivity extends AppCompatActivity {
                     Intent share = Intent.createChooser(sharingIntent, "Share Via");
                     startActivity(share);
                     return true;
-                } if (item.getItemId() == R.id.option_rate) {
+                }
+                if (item.getItemId() == R.id.option_rate) {
                     Intent rate = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName()));
                     startActivity(rate);
                     return true;
-                } if (item.getItemId() == R.id.privacy_policy) {
+                }
+                if (item.getItemId() == R.id.privacy_policy) {
                     Intent policy = new Intent(getApplicationContext(), Policy.class);
                     startActivity(policy);
                     return true;
-                } if (item.getItemId() == R.id.option_guide) {
+                }
+                if (item.getItemId() == R.id.option_guide) {
                     Intent intro = new Intent(getApplicationContext(), Policy.class);
                     startActivity(intro);
                     return true;
                 } else {
                     return false;
                 }
-            }catch (Exception exception) {
+            } catch (Exception exception) {
                 System.out.println(exception.getMessage());
                 Snackbar snackbar = Snackbar.make(mainView, "Something went wrong", Snackbar.LENGTH_SHORT);
-                         customizeSnackbar(snackbar);
-                         snackbar.show();
+                customizeSnackbar(snackbar);
+                snackbar.show();
             }
             return false;
         });
@@ -318,11 +370,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null); // Clean up handler callbacks
-        try {
-            startService(new Intent(MainActivity.this, SmsListenerService.class));
-        } catch (Exception e) {
-            Log.d("MainActivity", "Error starting SMS Listener Service", e);
+        Intent serviceIntent = new Intent(this, SmsListenerService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent); // Required for Android O and above
+        } else {
+            startService(serviceIntent);
         }
+
     }
 
 
@@ -339,13 +393,13 @@ public class MainActivity extends AppCompatActivity {
             debitedAmountTextView.setText("");
         } else {
             // Display the total amount flow
-            totalAmountTextView.setText("Total Amount Flow \n  ₹ " + formatAmount(dailyAmount.total()));
+            totalAmountTextView.setText("Total Amount Flow\n  ₹ " + formatAmount(dailyAmount.total()));
             totalAmountTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             // Display the credited amount
-            creditedAmountTextView.setText("Credited Amount    \n  ₹ " + formatAmount(dailyAmount.credited));
+            creditedAmountTextView.setText("Credited Amount\n  ₹ " + formatAmount(dailyAmount.credited));
             creditedAmountTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             // Display the debited amount
-            debitedAmountTextView.setText("Debited Amount      \n  ₹ " + formatAmount(dailyAmount.debited));
+            debitedAmountTextView.setText("Debited Amount\n  ₹ " + formatAmount(dailyAmount.debited));
             debitedAmountTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
     }
@@ -410,14 +464,16 @@ public class MainActivity extends AppCompatActivity {
     private void loadLog() {
         try {
             String json = sharedPreferences.getString("dailyLog", "{}");
-            Type type = new TypeToken<HashMap<String, SmsReceiver.DailyAmount>>() {}.getType();
+            Type type = new TypeToken<HashMap<String, SmsReceiver.DailyAmount>>() {
+            }.getType();
             dailyLog = new Gson().fromJson(json, type);
             if (dailyLog == null) {
                 dailyLog = new HashMap<>();
             }
 
             String transactionJson = sharedPreferences.getString("transactions", "[]");
-            Type transactionType = new TypeToken<ArrayList<Transaction>>() {}.getType();
+            Type transactionType = new TypeToken<ArrayList<Transaction>>() {
+            }.getType();
             transactions = new Gson().fromJson(transactionJson, transactionType);
             if (transactions == null) {
                 transactions = new ArrayList<>();
@@ -428,29 +484,216 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+//    private void updateGreeting() {
+//        String userId1 = Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
+//        String userId = Objects.requireNonNull(String.valueOf(mAuth.getInstance().getCurrentUser()));
+//
+//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+//        DatabaseReference userRef = databaseReference.child(userId1).child("firstName");
+//        System.out.println("UserID : "+userId);
+//        System.out.println("databaseReference : "+databaseReference.getDatabase());
+//        System.out.println("databaseReference : "+databaseReference.getDatabase().getReference().getKey());
+//        System.out.println("databaseReference : "+databaseReference.getDatabase().getReference());
+//        System.out.println("databaseReference : "+userRef.toString());
+//        userRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                try {
+//                    // Check if the data exists
+//                    if (dataSnapshot.exists()) {
+//                        String firstName = dataSnapshot.getValue(String.class);
+//
+//                        Calendar calendar = Calendar.getInstance();
+//                        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+//
+//                        String greeting;
+//                        if (hourOfDay >= 5 && hourOfDay < 12) {
+//                            greeting = "Good Morning, " + (firstName != null ? firstName : "User");
+//                        } else if (hourOfDay >= 12 && hourOfDay < 17) {
+//                            greeting = "Good Afternoon, " + (firstName != null ? firstName : "User");
+//                        } else if (hourOfDay >= 17 && hourOfDay < 21) {
+//                            greeting = "Good Evening, " + (firstName != null ? firstName : "User");
+//                        } else {
+//                            greeting = "Good Night, " + (firstName != null ? firstName : "User");
+//                        }
+//
+//                        greetingTextView.setText(greeting);
+//                    } else {
+//                        // Handle the case where data does not exist
+//                        Log.e("MainActivity", "No data found for userId: " + userId);
+//                        Snackbar.make(mainView, "User data not found", Snackbar.LENGTH_SHORT)
+//                                .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.black))
+//                                .setBackgroundTint(getColor(R.color.yellow))
+//                                .show();
+//
+//                        // Fallback greeting
+//                        Calendar calendar = Calendar.getInstance();
+//                        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+//
+//                        String fallbackGreeting;
+//                        if (hourOfDay >= 5 && hourOfDay < 12) {
+//                            fallbackGreeting = "Good Morning, User";
+//                        } else if (hourOfDay >= 12 && hourOfDay < 17) {
+//                            fallbackGreeting = "Good Afternoon, User";
+//                        } else if (hourOfDay >= 17 && hourOfDay < 21) {
+//                            fallbackGreeting = "Good Evening, User";
+//                        } else {
+//                            fallbackGreeting = "Good Night, User";
+//                        }
+//
+//                        greetingTextView.setText(fallbackGreeting);
+//                    }
+//                } catch (Exception exception) {
+//                    Log.e("MainActivity", "Error processing greeting data", exception);
+//                    Snackbar.make(mainView, "Error retrieving greeting data", Snackbar.LENGTH_SHORT)
+//                            .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.black))
+//                            .setBackgroundTint(getColor(R.color.yellow))
+//                            .show();
+//
+//                    // Fallback greeting in case of an error
+//                    Calendar calendar = Calendar.getInstance();
+//                    int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+//
+//                    String fallbackGreeting;
+//                    if (hourOfDay >= 5 && hourOfDay < 12) {
+//                        fallbackGreeting = "Good Morning, User";
+//                    } else if (hourOfDay >= 12 && hourOfDay < 17) {
+//                        fallbackGreeting = "Good Afternoon, User";
+//                    } else if (hourOfDay >= 17 && hourOfDay < 21) {
+//                        fallbackGreeting = "Good Evening, User";
+//                    } else {
+//                        fallbackGreeting = "Good Night, User";
+//                    }
+//
+//                    greetingTextView.setText(fallbackGreeting);
+//                }
+//            }
+
+
     private void updateGreeting() {
-        try {
-            String visitor = "User.";
-            Calendar calendar = Calendar.getInstance();
-            int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-            String greeting;
-            if (hourOfDay >= 5 && hourOfDay < 12) {
-                greeting = "Good Morning, " + visitor;
-            } else if (hourOfDay >= 12 && hourOfDay < 17) {
-                greeting = "Good Afternoon, " + visitor;
-            } else if (hourOfDay >= 17 && hourOfDay < 21) {
-                greeting = "Good Evening, " + visitor;
-            } else {
-                greeting = "Good Night, " + visitor;
-            }
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            String userMail = currentUser.getEmail();
 
-            greetingTextView.setText(greeting);
-        } catch (Exception e) {
-            Log.e("MainActivity", "Error updating greeting", e);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("firstName");
+
+//            System.out.println("CurrentUser  : "+currentUser.getDisplayName());
+//            System.out.println("UserID  : "+userId);
+//            System.out.println("UserMail  : "+userMail);
+//            System.out.println("userRef : "+userRef.toString());
+//            System.out.println("database : "+databaseReference.getDatabase());
+//            System.out.println("databaseReference : "+databaseReference.getDatabase().getReference());
+//            System.out.println("databaseReferenceKey : "+databaseReference.getDatabase().getReference().getKey());
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    try {
+                        // Check if the data exists
+                        if (dataSnapshot.exists()) {
+                            String firstName = dataSnapshot.getValue(String.class);
+
+                            if (firstName != null) {
+                                firstName = firstName.toLowerCase(); // Convert to lowercase
+                                firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1); // Capitalize first letter
+                            }
+
+                            Calendar calendar = Calendar.getInstance();
+                            int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+                            String greeting;
+                            if (hourOfDay >= 5 && hourOfDay < 12) {
+                                greeting = "Good Morning, " + (firstName != null ? firstName : "User");
+                            } else if (hourOfDay >= 12 && hourOfDay < 17) {
+                                greeting = "Good Afternoon, " + (firstName != null ? firstName : "User");
+                            } else if (hourOfDay >= 17 && hourOfDay < 21) {
+                                greeting = "Good Evening, " + (firstName != null ? firstName : "User");
+                            } else {
+                                greeting = "Good Night, " + (firstName != null ? firstName : "User");
+                            }
+
+                            greetingTextView.setText(greeting);
+                        } else {
+                            // Handle the case where data does not exist
+                            Log.e("MainActivity", "No data found for userId: " + userId);
+                            Snackbar.make(mainView, "User data not found", Snackbar.LENGTH_SHORT)
+                                    .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.black))
+                                    .setBackgroundTint(getColor(R.color.yellow))
+                                    .show();
+
+                            // Fallback greeting
+                            Calendar calendar = Calendar.getInstance();
+                            int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+                            String fallbackGreeting;
+                            if (hourOfDay >= 5 && hourOfDay < 12) {
+                                fallbackGreeting = "Good Morning, User";
+                            } else if (hourOfDay >= 12 && hourOfDay < 17) {
+                                fallbackGreeting = "Good Afternoon, User";
+                            } else if (hourOfDay >= 17 && hourOfDay < 21) {
+                                fallbackGreeting = "Good Evening, User";
+                            } else {
+                                fallbackGreeting = "Good Night, User";
+                            }
+
+                            greetingTextView.setText(fallbackGreeting);
+                        }
+                    } catch (Exception exception) {
+                        Log.e("MainActivity", "Error processing greeting data", exception);
+                        Snackbar.make(mainView, "Error retrieving greeting data", Snackbar.LENGTH_SHORT)
+                                .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.black))
+                                .setBackgroundTint(getColor(R.color.yellow))
+                                .show();
+
+                        // Fallback greeting in case of an error
+                        Calendar calendar = Calendar.getInstance();
+                        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+                        String fallbackGreeting;
+                        if (hourOfDay >= 5 && hourOfDay < 12) {
+                            fallbackGreeting = "Good Morning, User";
+                        } else if (hourOfDay >= 12 && hourOfDay < 17) {
+                            fallbackGreeting = "Good Afternoon, User";
+                        } else if (hourOfDay >= 17 && hourOfDay < 21) {
+                            fallbackGreeting = "Good Evening, User";
+                        } else {
+                            fallbackGreeting = "Good Night, User";
+                        }
+
+                        greetingTextView.setText(fallbackGreeting);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("MainActivity", "Error retrieving user data", databaseError.toException());
+                    Snackbar.make(mainView, "Database error: " + databaseError.getMessage(), Snackbar.LENGTH_SHORT)
+                            .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.black))
+                            .setBackgroundTint(getColor(R.color.yellow))
+                            .show();
+
+                    // Fallback greeting in case of an error
+                    Calendar calendar = Calendar.getInstance();
+                    int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+                    String fallbackGreeting;
+                    if (hourOfDay >= 5 && hourOfDay < 12) {
+                        fallbackGreeting = "Good Morning, User";
+                    } else if (hourOfDay >= 12 && hourOfDay < 17) {
+                        fallbackGreeting = "Good Afternoon, User";
+                    } else if (hourOfDay >= 17 && hourOfDay < 21) {
+                        fallbackGreeting = "Good Evening, User";
+                    } else {
+                        fallbackGreeting = "Good Night, User";
+                    }
+
+                    greetingTextView.setText(fallbackGreeting);
+                }
+            });
         }
     }
-
 
     private void showAddTransactionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

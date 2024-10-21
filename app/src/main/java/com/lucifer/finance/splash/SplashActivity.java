@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.lucifer.finance.MainActivity;
 import com.lucifer.finance.R;
+import com.lucifer.finance.auth.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -36,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Start the main activity
-                Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(mainIntent);
                 finish(); // Finish the splash activity so user can't return to it
             }

@@ -12,6 +12,10 @@
                     android:id="@+id/viewTransactionButton"
                     android:icon="@drawable/ic_trans"
                     android:title="@string/transaction_history" />
+            <item
+                    android:id="@+id/logout"
+                    android:icon="@drawable/ic_trans"
+                    android:title="@string/logout" />
         </menu>
     </item>
 
@@ -20,7 +24,7 @@
             <item
                     android:id="@+id/option_guide"
                     android:icon="@drawable/guide"
-                    android:title="@string/app_guide"
+                    android:title="@string/privacy_policy"
                     android:actionLayout="@layout/nav_menu_item"/>
             <item
                     android:id="@+id/option_contact"
