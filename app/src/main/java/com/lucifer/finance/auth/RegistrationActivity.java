@@ -1686,7 +1686,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                         // Use Firebase Authentication UID as the key to store user data
                                         String userId = user.getUid();
-                                        UserData userData = new UserData(firstName.toLowerCase(), lastName.toLowerCase(), email.toLowerCase(), "test_url", "");
+                                        UserData userData = new UserData(firstName.toLowerCase(), lastName.toLowerCase(), email.toLowerCase(), "", generateUniqueId());
 
                                         // Store user data in the database using Firebase UID as key
                                         mDatabase.child(userId).setValue(userData)
@@ -1744,5 +1744,17 @@ public class RegistrationActivity extends AppCompatActivity {
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textView.setTextSize(15);
         snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.black));
+    }
+
+    public static String generateUniqueId() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder uniqueId = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < 6; i++) {
+            uniqueId.append(chars.charAt(random.nextInt(chars.length())));
+        }
+
+        return uniqueId.toString();
     }
 }

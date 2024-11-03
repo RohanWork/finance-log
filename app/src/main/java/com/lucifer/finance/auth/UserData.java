@@ -7,6 +7,9 @@ public class UserData {
     private String profilePictureUrl;
     private String uniqueId;
 
+    public UserData() {
+    }
+
     public UserData(String firstName, String lastName, String email, String profilePictureUrl, String uniqueId) {
         this.firstName = firstName;
         this.lastName = lastName;

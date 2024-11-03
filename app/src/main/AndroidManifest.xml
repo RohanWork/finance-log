@@ -142,6 +142,9 @@
         <activity android:name=".transaction.TransactionDetailActivity" />
         <activity android:name=".auxilary.Policy" />
         <activity android:name=".auxilary.DeveloperInfo" />
+        <activity android:name=".auth.UserProfileActivity" />
+        <activity android:name="com.yalantis.ucrop.UCropActivity"
+                  android:screenOrientation="portrait"/>
 
         <service android:name=".smsfunctionality.SmsListenerService"
                  android:foregroundServiceType="shortService"/>
