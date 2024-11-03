@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools">
 
-    <item android:title="@string/transaction_options">
+    <item android:title="@string/activity">
         <menu>
             <item
                     android:id="@+id/historyButton"
@@ -13,8 +13,12 @@
                     android:icon="@drawable/ic_trans"
                     android:title="@string/transaction_history" />
             <item
+                    android:id="@+id/profile"
+                    android:icon="@drawable/ic_profile"
+                    android:title="@string/profile" />
+            <item
                     android:id="@+id/logout"
-                    android:icon="@drawable/ic_trans"
+                    android:icon="@drawable/ic_logout"
                     android:title="@string/logout" />
         </menu>
     </item>

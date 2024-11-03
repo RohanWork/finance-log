@@ -42,6 +42,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.lucifer.finance.auth.LoginActivity;
+import com.lucifer.finance.auth.UserProfileActivity;
 import com.lucifer.finance.auxilary.DeveloperInfo;
 import com.lucifer.finance.auxilary.Policy;
 import com.lucifer.finance.build.LoadBuildConfig;
@@ -268,6 +269,11 @@ public class MainActivity extends AppCompatActivity {
                             .show();
 
                 }
+                if (item.getItemId() == R.id.profile) {
+                    Intent userProfile = new Intent(MainActivity.this, UserProfileActivity.class);
+                    startActivity(userProfile);
+                    return true;
+                }
                 if (item.getItemId() == R.id.option_contact) {
                     Intent devContact = new Intent(MainActivity.this, DeveloperInfo.class);
                     startActivity(devContact);
@@ -289,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
                     // Create the email intent
                     Intent email = new Intent(Intent.ACTION_SENDTO);
                     email.setData(Uri.parse("mailto:")); // Only email apps should handle this
-                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{"kanjarkarprathmesh@gmail.com"});
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{"pubdata.ltd@gmail.com"});
                     email.putExtra(Intent.EXTRA_SUBJECT, "Reporting bug/error of finance-log v" + versionName);
                     email.putExtra(Intent.EXTRA_TEXT, "Report ID: \n" + reportId + "\n\nNOTE: \nPlease attach the screenshot or any valid image of design/component bug.\n\n ");
 

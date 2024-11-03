@@ -40,9 +40,11 @@
     <string name="app_guide">App Guide</string>
     <string name="report_bug_error">Report Bug/Error</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="app_version">Finance Log Android v2.4.5</string>
+    <string name="app_version">Finance Log</string>
     <string name="transaction_log">Transaction Log</string>
     <string name="transaction_history">Transaction History</string>
     <string name="transaction_options">Transaction Options</string>
     <string name="logout">Logout</string>
+    <string name="profile">Profile</string>
+    <string name="activity">Activity</string>
 </resources>
