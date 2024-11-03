@@ -47,4 +47,5 @@
     <string name="logout">Logout</string>
     <string name="profile">Profile</string>
     <string name="activity">Activity</string>
+    <string name="intro_image">intro_image</string>
 </resources>

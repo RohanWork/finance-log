@@ -1,5 +1,7 @@
 package com.lucifer.finance.auth;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -1107,7 +1109,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private EditText firstNameEditText, lastNameEditText, emailEditText;
     private ImageView profileImageView;
-    private Button updateProfileButton, changePasswordButton;
+    private Button updateProfileButton, changePasswordButton, buttonLogout;
     private FirebaseAuth mAuth;
     private DatabaseReference userDatabase;
     private StorageReference storageReference;
@@ -1152,12 +1154,36 @@ public class UserProfileActivity extends AppCompatActivity {
         changePasswordButton = findViewById(R.id.button_change_password);
         progressBar = findViewById(R.id.progress_bar);
         progressNote = findViewById(R.id.progress_note);
+        buttonLogout = findViewById(R.id.button_logout);
     }
 
     private void setButtonListeners() {
         updateProfileButton.setOnClickListener(v -> updateProfile());
         changePasswordButton.setOnClickListener(v -> resetPassword());
         profileImageView.setOnClickListener(v -> openImagePicker());
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmLogout();
+            }
+        });
+    }
+
+    private void confirmLogout() {
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
+                        Toast.makeText(UserProfileActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                        Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(login);
+                        finish(); // Close the activity and return to login screen
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
     }
 
     private void loadUserData() {
@@ -1171,12 +1197,14 @@ public class UserProfileActivity extends AppCompatActivity {
                     emailEditText.setText(userData.getEmail());
 
                     if (userData.getProfilePictureUrl() != null) {
-                        Glide.with(UserProfileActivity.this)
-                                .load(userData.getProfilePictureUrl())
-                                .placeholder(R.drawable.ic_profile)
-                                .override(1024, 1024)
-//                                .circleCrop()
-                                .into(profileImageView);
+                        // Check if the activity is still valid before using Glide
+                        if (!isFinishing() && !isDestroyed()) {
+                            Glide.with(UserProfileActivity.this)
+                                    .load(userData.getProfilePictureUrl())
+                                    .placeholder(R.drawable.ic_profile)
+                                    .override(1024, 1024)
+                                    .into(profileImageView);
+                        }
                     }
                 }
             }
