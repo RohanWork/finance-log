@@ -150,4 +150,10 @@
         <item name="android:windowBackground">@drawable/rounded_corner_dialog_background</item>
     </style>
 
+    <style name="CustomButtonText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#000</item> <!-- Change this to your desired color -->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item> <!-- Optional: Set text size -->
+    </style>
+
 </resources>

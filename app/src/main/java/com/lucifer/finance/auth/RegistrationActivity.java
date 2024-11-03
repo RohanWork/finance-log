@@ -1123,6 +1123,7 @@ import com.lucifer.finance.R;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.UUID;
 
 //public class RegistrationActivity extends AppCompatActivity {
 //
@@ -1746,7 +1747,7 @@ public class RegistrationActivity extends AppCompatActivity {
         snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.black));
     }
 
-    public static String generateUniqueId() {
+    /*public static String generateUniqueId() {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder uniqueId = new StringBuilder();
         Random random = new Random();
@@ -1756,5 +1757,9 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         return uniqueId.toString();
+    }*/
+
+    public static String generateUniqueId() {
+        return UUID.randomUUID().toString(); // Generates a unique ID in the format of xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     }
 }

@@ -16,10 +16,10 @@
                     android:id="@+id/profile"
                     android:icon="@drawable/ic_profile"
                     android:title="@string/profile" />
-            <item
+            <!--<item
                     android:id="@+id/logout"
                     android:icon="@drawable/ic_logout"
-                    android:title="@string/logout" />
+                    android:title="@string/logout" />-->
         </menu>
     </item>
 
@@ -28,14 +28,14 @@
             <item
                     android:id="@+id/option_guide"
                     android:icon="@drawable/guide"
-                    android:title="@string/privacy_policy"
+                    android:title="@string/app_guide"
                     android:actionLayout="@layout/nav_menu_item"/>
             <item
                     android:id="@+id/option_contact"
                     android:icon="@drawable/contact"
                     android:title="@string/developer_contact"
                     android:actionLayout="@layout/nav_menu_item"/>
-            <item
+            <!--<item
                     android:id="@+id/option_rate"
                     android:icon="@drawable/rate"
                     android:title="@string/rate_us"
@@ -45,6 +45,7 @@
                     android:icon="@drawable/share"
                     android:title="@string/share_via"
                     android:actionLayout="@layout/nav_menu_item"/>
+-->
             <item
                     android:id="@+id/option_report"
                     android:icon="@drawable/bug_report"

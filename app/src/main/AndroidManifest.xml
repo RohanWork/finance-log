@@ -145,6 +145,7 @@
         <activity android:name=".auth.UserProfileActivity" />
         <activity android:name="com.yalantis.ucrop.UCropActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".intro.AppGuideActivity" />
 
         <service android:name=".smsfunctionality.SmsListenerService"
                  android:foregroundServiceType="shortService"/>

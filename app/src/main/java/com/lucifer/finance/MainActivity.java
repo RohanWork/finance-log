@@ -47,6 +47,7 @@ import com.lucifer.finance.auxilary.DeveloperInfo;
 import com.lucifer.finance.auxilary.Policy;
 import com.lucifer.finance.build.LoadBuildConfig;
 import com.lucifer.finance.history.HistoryActivity;
+import com.lucifer.finance.intro.AppGuideActivity;
 import com.lucifer.finance.smsfunctionality.SmsListenerService;
 import com.lucifer.finance.smsfunctionality.SmsReceiver;
 import com.lucifer.finance.transaction.Transaction;
@@ -241,7 +242,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, TransactionDetailActivity.class));
                     return true;
                 }
-                if (item.getItemId() == R.id.logout) {
+                //logot option disabled because its implemented in userprofileactivity
+                /*if (item.getItemId() == R.id.logout) {
                     new AlertDialog.Builder(MainActivity.this)
                             .setTitle("Logout")
                             .setMessage("Do you want to logout from your account?")
@@ -268,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                             .create()
                             .show();
 
-                }
+                }*/
                 if (item.getItemId() == R.id.profile) {
                     Intent userProfile = new Intent(MainActivity.this, UserProfileActivity.class);
                     startActivity(userProfile);
@@ -308,7 +310,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return true;
                 }
-                if (item.getItemId() == R.id.option_share) {
+                //temporary disabled option due to non functional components
+                /*if (item.getItemId() == R.id.option_share) {
                     Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
                     sharingIntent.putExtra(Intent.EXTRA_TEXT, "Your app is here, download it and join us!\n https://play.google.com/store/apps/details?id=" + getPackageName());
@@ -320,14 +323,14 @@ public class MainActivity extends AppCompatActivity {
                     Intent rate = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName()));
                     startActivity(rate);
                     return true;
-                }
+                }*/
                 if (item.getItemId() == R.id.privacy_policy) {
                     Intent policy = new Intent(getApplicationContext(), Policy.class);
                     startActivity(policy);
                     return true;
                 }
                 if (item.getItemId() == R.id.option_guide) {
-                    Intent intro = new Intent(getApplicationContext(), Policy.class);
+                    Intent intro = new Intent(getApplicationContext(), AppGuideActivity.class);
                     startActivity(intro);
                     return true;
                 } else {
@@ -673,30 +676,35 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e("MainActivity", "Error retrieving user data", databaseError.toException());
-                    Snackbar.make(mainView, "Database error: " + databaseError.getMessage(), Snackbar.LENGTH_SHORT)
-                            .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.black))
-                            .setBackgroundTint(getColor(R.color.yellow))
-                            .show();
-
-                    // Fallback greeting in case of an error
-                    Calendar calendar = Calendar.getInstance();
-                    int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-
-                    String fallbackGreeting;
-                    if (hourOfDay >= 5 && hourOfDay < 12) {
-                        fallbackGreeting = "Good Morning, User";
-                    } else if (hourOfDay >= 12 && hourOfDay < 17) {
-                        fallbackGreeting = "Good Afternoon, User";
-                    } else if (hourOfDay >= 17 && hourOfDay < 21) {
-                        fallbackGreeting = "Good Evening, User";
-                    } else {
-                        fallbackGreeting = "Good Night, User";
-                    }
-
-                    greetingTextView.setText(fallbackGreeting);
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                    Log.e("MainActivity", "Error retrieving user data", error.toException());
                 }
+
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) /*{
+//                    Log.e("MainActivity", "Error retrieving user data", databaseError.toException());
+//                    Snackbar.make(mainView, "Database error: " + databaseError.getMessage(), Snackbar.LENGTH_SHORT)
+//                            .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.black))
+//                            .setBackgroundTint(getColor(R.color.yellow))
+//                            .show();
+//
+//                    // Fallback greeting in case of an error
+//                    Calendar calendar = Calendar.getInstance();
+//                    int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+//
+//                    String fallbackGreeting;
+//                    if (hourOfDay >= 5 && hourOfDay < 12) {
+//                        fallbackGreeting = "Good Morning, User";
+//                    } else if (hourOfDay >= 12 && hourOfDay < 17) {
+//                        fallbackGreeting = "Good Afternoon, User";
+//                    } else if (hourOfDay >= 17 && hourOfDay < 21) {
+//                        fallbackGreeting = "Good Evening, User";
+//                    } else {
+//                        fallbackGreeting = "Good Night, User";
+//                    }
+//
+//                    greetingTextView.setText(fallbackGreeting);
+//                }*/
             });
         }
     }

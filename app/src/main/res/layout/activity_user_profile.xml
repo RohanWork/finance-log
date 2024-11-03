@@ -144,6 +144,13 @@
                     android:text="Reset Password"
                     android:layout_marginTop="16dp" />
 
+            <Button
+                    android:id="@+id/button_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Logout"
+                    android:layout_marginTop="16dp"/>
+
         </LinearLayout>
     </ScrollView>
 
